@@ -1,6 +1,5 @@
 import streamlit as st
 from Todo import Todo
-from datetime import datetime
 
 st.set_page_config(page_title="Todo App", layout="centered")
 
@@ -34,7 +33,6 @@ else:
         col1, col2, col3 = st.columns([4, 1, 1])
         col1.write(f"📝 {item.title}")
         if col2.button("✔️ Done", key=f"done{index}"):
-            item.set_complete()
             item.set_complete()
             st.session_state.data.remove(item)
             st.session_state.data_complete.append(item)
