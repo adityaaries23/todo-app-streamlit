@@ -1,5 +1,4 @@
-import streamlit as st
-from Todo import Todo
+from method import *
 
 st.set_page_config(page_title="Todo App", layout="centered")
 
@@ -16,13 +15,7 @@ if "data_complete" not in st.session_state:
 new = st.text_input("Add a New Task", placeholder="Enter task here...")
 
 if st.button("➕ Add Task"):
-    if new.strip():
-        new_todo = Todo(new.strip())
-        st.session_state.data.append(new_todo)
-        st.toast("✅ Task added successfully!", icon="🎉")
-        st.rerun()
-    else:
-        st.warning("⚠️ Task cannot be empty!")
+    add_task(new)
 
 # **Pending Tasks**
 st.subheader("📌 Pending Tasks")
@@ -33,13 +26,9 @@ else:
         col1, col2, col3 = st.columns([4, 1, 1])
         col1.write(f"📝 {item.title}")
         if col2.button("✔️ Done", key=f"done{index}"):
-            item.set_complete()
-            st.session_state.data.remove(item)
-            st.session_state.data_complete.append(item)
-            st.rerun()
+            complete_task(st.session_state.data, st.session_state.data_complete, index)
         if col3.button("🗑️ Delete", key=f"delete{index}"):
-            st.session_state.data.remove(item)
-            st.rerun()
+            delete_task(st.session_state.data, index)
 
 # **Completed Tasks**
 st.subheader("✅ Completed Tasks")
